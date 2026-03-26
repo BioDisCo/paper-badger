@@ -1,0 +1,116 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "paper-badger"
+dynamic = ["version"]
+description = "Automate theorem extraction, Lean formalization runs, and verified badge insertion for research papers."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+authors = [{ name = "Thomas Nowak", email = "thomas@thomasnowak.net" }]
+keywords = ["arxiv", "latex", "lean", "formalization", "research", "verification"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Text Processing :: Markup :: LaTeX",
+  "Topic :: Utilities",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/BioDisCo/paper-badger"
+Repository = "https://github.com/BioDisCo/paper-badger"
+Issues = "https://github.com/BioDisCo/paper-badger/issues"
+
+[project.scripts]
+paper-badger = "paper_badger.cli:main"
+
+[dependency-groups]
+dev = [
+  "mypy>=1.10,<2",
+  "pre-commit>=4,<5",
+  "pyright>=1.1,<2",
+  "pytest>=8,<9",
+  "ruff>=0.4,<1",
+]
+
+# --- Build ---
+
+[tool.hatch.version]
+path = "src/paper_badger/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/paper_badger"]
+
+# --- Lint ---
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+  "A",     # flake8-builtins
+  "ARG",   # flake8-unused-arguments
+  "B",     # flake8-bugbear
+  "C4",    # flake8-comprehensions
+  "E", "W", # pycodestyle
+  "ERA",   # eradicate
+  "F",     # pyflakes
+  "I",     # isort
+  "N",     # pep8-naming
+  "PERF",  # perflint
+  "PL",    # pylint
+  "PT",    # flake8-pytest-style
+  "PTH",   # flake8-use-pathlib
+  "RET",   # flake8-return
+  "RUF",   # ruff-specific
+  "S",     # flake8-bandit
+  "SIM",   # flake8-simplify
+  "TCH",   # flake8-type-checking
+  "UP",    # pyupgrade
+]
+ignore = [
+  "E501",    # line length (handled by formatter)
+  "PLR0912", # too many branches
+  "PLR0913", # too many arguments
+  "PLR0915", # too many statements
+  "PLR2004", # magic values
+  "S101",    # assert
+  "S202",    # tarfile.extractall (guarded)
+  "S310",    # audit URL open (known URLs only)
+  "S603",    # subprocess untrusted input
+  "S607",    # partial executable path
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ARG001", "ARG002"]
+
+# --- Type checking ---
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+reportPrivateUsage = false
+reportUnusedFunction = "warning"
+venvPath = "."
+venv = ".venv"
+
+# --- Test ---
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra -q --strict-markers --strict-config"
