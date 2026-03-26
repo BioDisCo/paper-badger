@@ -1,5 +1,6 @@
 """paper_badger package."""
 
-__all__ = ["__version__"]
+from importlib.metadata import version
 
-__version__ = "0.1.0"
+__version__ = version("paper-badger")
+__all__ = ["__version__"]

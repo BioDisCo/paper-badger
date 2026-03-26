@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
@@ -45,7 +45,7 @@ dev = [
 # --- Build ---
 
 [tool.hatch.version]
-path = "src/paper_badger/__init__.py"
+source = "vcs"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/paper_badger"]
