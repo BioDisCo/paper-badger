@@ -34,15 +34,21 @@ arXiv paper ──> extract statements ──> LLM prover ──> Lean compilati
 pip install paper-badger
 ```
 
+Or run directly without installing:
+
+```bash
+uvx paper-badger 2002.10752
+```
+
 ## Usage
 
 ### Formalize an arXiv paper
 
 ```bash
-paper-badger 2401.01234
+paper-badger 2002.10752
 ```
 
-The `run` subcommand is implied, so `paper-badger run 2401.01234` is equivalent.
+The `run` subcommand is implied, so `paper-badger run 2002.10752` is equivalent.
 
 ### Formalize a local paper
 
@@ -55,14 +61,14 @@ paper-badger run my-paper --paper-dir path/to/latex/
 By default the prover is `codex` and the verifier is `claude`. To use Claude for both:
 
 ```bash
-paper-badger run 2401.01234 --prover-backend claude --verifier-backend claude
+paper-badger run 2002.10752 --prover-backend claude --verifier-backend claude
 ```
 
 ### Monitor a run
 
 ```bash
-paper-badger monitor 2401.01234          # live dashboard
-paper-badger monitor 2401.01234 --once   # single snapshot
+paper-badger monitor 2002.10752          # live dashboard
+paper-badger monitor 2002.10752 --once   # single snapshot
 ```
 
 ### Badge link modes
@@ -74,7 +80,7 @@ paper-badger monitor 2401.01234 --once   # single snapshot
 | `auto`   | GitHub links when repo info is provided, local otherwise |
 
 ```bash
-paper-badger run 2401.01234 \
+paper-badger run 2002.10752 \
   --badge-link-mode github \
   --repo-url https://github.com/you/repo \
   --branch main
