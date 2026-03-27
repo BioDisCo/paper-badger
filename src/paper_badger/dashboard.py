@@ -68,7 +68,9 @@ def render_dashboard(state: RunState) -> str:
 def monitor_run(run_dir: Path, interval_seconds: float) -> None:
     while True:
         try:
-            snapshot = render_dashboard(load_state(run_dir))
+            state = load_state(run_dir)
+            state.run_dir = str(run_dir)
+            snapshot = render_dashboard(state)
         except (FileNotFoundError, json.JSONDecodeError) as exc:
             logger.debug("failed to load state: %s", exc)
             snapshot = f"Waiting for state.json in {run_dir} ..."

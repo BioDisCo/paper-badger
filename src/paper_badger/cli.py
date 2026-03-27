@@ -136,7 +136,9 @@ def main() -> None:
     if args.command == "monitor":
         run_dir = Path(args.runs_dir).resolve() / args.paper_id
         if args.once:
-            print(render_dashboard(load_state(run_dir)))
+            state = load_state(run_dir)
+            state.run_dir = str(run_dir)
+            print(render_dashboard(state))
             return
         monitor_run(run_dir, args.interval_seconds)
         return

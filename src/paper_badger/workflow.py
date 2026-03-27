@@ -226,6 +226,11 @@ def _load_or_initialize_state(
     explicit_repo_target = repo_url is not None or branch is not None
     if state_path.exists():
         state = RunState.from_dict(json.loads(state_path.read_text(encoding="utf-8")))
+        if Path(state.run_dir).resolve() != run_dir.resolve():
+            old_run_dir = Path(state.run_dir)
+            state.run_dir = str(run_dir)
+            state.paper_dir = str(run_dir / Path(state.paper_dir).relative_to(old_run_dir))
+            state.main_tex = str(run_dir / Path(state.main_tex).relative_to(old_run_dir))
         for task in state.tasks:
             if task.status == "proving":
                 task.status = "retry"

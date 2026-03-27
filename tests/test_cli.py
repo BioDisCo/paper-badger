@@ -1,5 +1,5 @@
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -61,7 +61,7 @@ def test_main_monitor_once_renders_snapshot(tmp_path: Path, capsys: pytest.Captu
 
     with (
         patch("paper_badger.cli.render_dashboard", return_value="dashboard"),
-        patch("paper_badger.cli.load_state", return_value=object()),
+        patch("paper_badger.cli.load_state", return_value=MagicMock()),
         patch(
             "sys.argv",
             ["paper_badger.cli", "monitor", "paper-id", "--runs-dir", str(tmp_path), "--once"],
